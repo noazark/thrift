@@ -289,7 +289,7 @@ class t_js_generator : public t_oop_generator {
     if (tdoc->has_doc()) {
       std::stringstream doc(tdoc->get_doc());
       string item;
-      
+
       result += ts_indent() + "/**" + endl;
       while (std::getline(doc, item)) {
         result += ts_indent() + " * " + item + endl;
@@ -645,13 +645,13 @@ void t_js_generator::generate_js_struct_definition(ofstream& out,
 
   if (gen_node_) {
     if (is_exported) {
-      out << js_namespace(tstruct->get_program()) << tstruct->get_name() << " = " <<
+      out << js_namespace(tstruct->get_program()) << "var " << tstruct->get_name() << " = " <<
         "module.exports." << tstruct->get_name() << " = function(args) {" << endl;
     } else {
-      out << js_namespace(tstruct->get_program()) << tstruct->get_name() << " = function(args) {" << endl;
+      out << js_namespace(tstruct->get_program()) << "var " << tstruct->get_name() << " = function(args) {" << endl;
     }
   } else {
-    out << js_namespace(tstruct->get_program()) << tstruct->get_name() <<" = function(args) {" << endl;
+    out << js_namespace(tstruct->get_program()) << "var " << tstruct->get_name() <<" = function(args) {" << endl;
     if (gen_ts_) {
       f_types_ts_ <<
         ts_print_doc(tstruct) <<
@@ -2178,7 +2178,7 @@ std::string t_js_generator::ts_function_signature(t_function* tfunction, bool in
 
   for (f_iter = fields.begin(); f_iter != fields.end(); ++f_iter) {
     str += (*f_iter)->get_name() + ts_get_req(*f_iter) + ": " + ts_get_type((*f_iter)->get_type());
-    
+
     if (f_iter + 1 != fields.end()) {
       str += ", ";
     }
